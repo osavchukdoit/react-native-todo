@@ -52,7 +52,6 @@ export const TodoState = ({ children }) => {
       const todosResponse = await Http.get(
         "https://rn-todo-app-14a2f-default-rtdb.europe-west1.firebasedatabase.app/todos.json"
       );
-      console.log("todosResponse=", todosResponse);
       const todos = todosResponse
         ? Object.keys(todosResponse).map((key) => ({
             ...todosResponse[key],

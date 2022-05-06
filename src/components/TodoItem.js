@@ -6,13 +6,13 @@ import { ScreenContext } from "../context/screen/screenContext";
 import { TodoContext } from "../context/todo/todoContext";
 
 export const TodoItem = ({ todoItem }) => {
-  const { changeScreen } = useContext(ScreenContext);
+  // const { changeScreen } = useContext(ScreenContext);
   const { title, id, done } = todoItem;
-  const { updateTodo } = useContext(TodoContext);
+  // const { updateTodo } = useContext(TodoContext);
 
-  const switchItemIsDone = async () => {
-    await updateTodo(id, "done", !done);
-  };
+  // const switchItemIsDone = async () => {
+  //   await updateTodo(id, "done", !done);
+  // };
 
   const logo = {
     uri: "https://reactnative.dev/img/tiny_logo.png",
@@ -23,8 +23,10 @@ export const TodoItem = ({ todoItem }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.4}
-      onPress={() => switchItemIsDone()}
-      onLongPress={() => changeScreen(id)}
+      // onPress={() => switchItemIsDone()}
+      // onLongPress={() => changeScreen(id)}
+      onPress={() => {}}
+      onLongPress={() => {}}
     >
       <View style={styles.itemWrapper}>
         <Image source={logo} style={styles.image} />

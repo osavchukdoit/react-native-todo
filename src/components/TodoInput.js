@@ -3,14 +3,21 @@ import { View, StyleSheet, Keyboard } from "react-native";
 import { AppInput } from "./ui/AppInput";
 import { Entypo } from "@expo/vector-icons";
 import { TodoContext } from "../context/todo/todoContext";
+import {useDispatch} from "react-redux";
+import {addTodo} from "../reducers/todoSlice";
+import {addTask} from "../api/todo";
 
 export const TodoInput = () => {
-  const { addTodo } = useContext(TodoContext);
+  // const { addTodo } = useContext(TodoContext);
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
-  const handleAddTodo = () => {
+  const handleAddTodo = async () => {
     if (inputValue.trim()) {
-      addTodo(inputValue);
+      // addTodo(inputValue);
+      // dispatch(addTodo({ id: Date.now(), title: inputValue }));
+      const name = await addTask(inputValue);
+      dispatch(addTodo({ id: name, title: inputValue }));
       setInputValue("");
       Keyboard.dismiss();
     }

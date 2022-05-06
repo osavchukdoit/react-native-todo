@@ -5,6 +5,12 @@ import AppLoading from "expo-app-loading";
 import { MainLayout } from "./src/MainLayout";
 import { TodoState } from "./src/context/todo/TodoState";
 import { ScreenState } from "./src/context/screen/ScreenState";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store from "./src/store";
+import { View } from "react-native";
+import { AppButton } from "./src/components/ui/AppButton";
+import { decrement, increment, reset } from "./src/reducers/counterSlice";
+import { Counter } from "./src/components/Counter";
 
 const loadApplication = async () => {
   await Font.loadAsync({
@@ -27,12 +33,19 @@ const App = () => {
   }
 
   return (
-    <ScreenState>
-      <TodoState>
-        <MainLayout />
-      </TodoState>
-    </ScreenState>
+    <Provider store={store}>
+      {/*<Counter />*/}
+      <MainLayout />
+    </Provider>
   );
+
+  // return (
+  //   <ScreenState>
+  //     <TodoState>
+  //       <MainLayout />
+  //     </TodoState>
+  //   </ScreenState>
+  // );
 };
 
 export default App;

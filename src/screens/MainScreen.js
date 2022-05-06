@@ -1,25 +1,30 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Image, Dimensions } from "react-native";
 import { ImagePlaceholder } from "../components/ImagePlaceholder";
 import { TodoInput } from "../components/TodoInput";
 import { TodoItem } from "../components/TodoItem";
 import { THEME } from "../theme";
-import { TodoContext } from "../context/todo/todoContext";
 import { AppLoader } from "../components/ui/AppLoader";
 import { AppText } from "../components/ui/AppText";
 import { AppButton } from "../components/ui/AppButton";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchTodos} from "../reducers/todoSlice";
+import {getTodos} from "../api/todo";
 
 export const MainScreen = () => {
-  const { todos, fetchTodos, loading, error } = useContext(TodoContext);
+  const { todos } = useSelector((state) => state.todo);
+  const { loading, error } = useSelector((state) => state.utils);
+  const dispatch = useDispatch();
 
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get("window").width - 2 * THEME.PADDINGS.HORIZONTAL
   );
 
-  const loadTodos = useCallback(async () => await fetchTodos(), [fetchTodos]);
+  const loadTodos = useCallback(async () => await getTodos(), [getTodos]);
 
-  useEffect(() => {
-    loadTodos();
+  useEffect(async() => {
+    const todosResponse = await loadTodos();
+    await dispatch(fetchTodos(todosResponse));
   }, []);
 
   const emptyContent = (
